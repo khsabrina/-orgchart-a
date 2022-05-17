@@ -57,7 +57,7 @@ namespace ariel{
 		    };
             Node* root =nullptr;
             vector<Node*> level_order;
-            vector<Node*> reverse_order;
+            vector<Node*> _reverse_order;
             vector<Node*> pre_order;
             
         public:
@@ -83,7 +83,7 @@ namespace ariel{
             void update_reverse_order(){
                 queue<Node*> q;
                 stack<Node*> s;
-                this->reverse_order.clear();
+                this->_reverse_order.clear();
                 q.push(this->root);
                 while(!q.empty()){
                     Node* current=q.front();
@@ -96,7 +96,7 @@ namespace ariel{
                     }
                 }
                 while(!s.empty()){
-                    this->reverse_order.push_back(s.top());
+                    this->_reverse_order.push_back(s.top());
                     s.pop();
                 }
             }
@@ -139,9 +139,9 @@ namespace ariel{
             }
             OrgChart_itertaor begin_reverse_order() {
                 update_reverse_order();
-                return OrgChart_itertaor{this->reverse_order.at(0),this->reverse_order};
+                return OrgChart_itertaor{this->_reverse_order.at(0),this->_reverse_order};
             }
-            OrgChart_itertaor end_reverse_order() {
+            OrgChart_itertaor reverse_order() {
                 return OrgChart_itertaor{};
             }
             OrgChart_itertaor begin_preorder() {
@@ -152,10 +152,14 @@ namespace ariel{
                 return OrgChart_itertaor{};
             }
             OrgChart_itertaor begin() {
+                update_level_order();
                 return OrgChart_itertaor{this->level_order.at(0),this->level_order};
             }
             OrgChart_itertaor end() {
                 return OrgChart_itertaor{};
+            }
+            friend ostream& operator<< (ostream& output, OrgChart const &m) {
+                return output;
             }
 
 
